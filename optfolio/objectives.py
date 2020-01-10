@@ -1,6 +1,6 @@
 import numpy as np
 
-YEAR_BARS : int = 252
+from optfolio import YEAR_BARS
 
 
 def annualized_return(solutions : np.ndarray, returns_mean : np.ndarray) -> np.ndarray:

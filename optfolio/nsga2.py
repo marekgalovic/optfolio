@@ -1,6 +1,5 @@
 import numpy as np
 import numba as nb
-from numba.typed import List
 
 from optfolio.utils import is_close_to_zero
 
