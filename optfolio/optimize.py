@@ -16,7 +16,7 @@ class Optimizer:
         self._mutation_sigma = mutation_sigma
         self._verbose = verbose
 
-    def run(self, returns : np.ndarray):
+    def run(self, returns : np.ndarray) -> (np.ndarray, dict):
         stats = {
             'return': {'min': [], 'max': [], 'avg': []},
             'volatility': {'min': [], 'max': [], 'avg': []},

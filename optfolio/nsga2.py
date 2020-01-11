@@ -127,5 +127,3 @@ def flat_crossover(p1 : np.ndarray, p2 : np.ndarray) -> np.ndarray:
 @nb.jit(nopython=True)
 def gaussian_mutation(x : np.ndarray, sigma : float = 1) -> np.ndarray:
     return x + np.random.normal(0, sigma, size=x.shape)
-    
-
