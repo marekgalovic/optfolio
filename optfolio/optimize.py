@@ -2,7 +2,7 @@ import time
 
 import numpy as np
 
-from optfolio.objectives import annualized_return, annualized_volatility, unit_sum_constraint
+from optfolio.objectives import annualized_return, annualized_volatility, unit_sum_constraint, max_allocation_constraint
 from optfolio.nsga2 import non_dominated_fronts, tournament_selection, flat_crossover, gaussian_mutation, select_top_individuals
 
 
@@ -16,7 +16,7 @@ class Optimizer:
         self._mutation_sigma = mutation_sigma
         self._verbose = verbose
 
-    def run(self, returns : np.ndarray) -> (np.ndarray, dict):
+    def run(self, returns : np.ndarray, max_allocation : float = None) -> (np.ndarray, dict):
         stats = {
             'return': {'min': [], 'max': [], 'avg': []},
             'volatility': {'min': [], 'max': [], 'avg': []},
@@ -30,6 +30,8 @@ class Optimizer:
         return_obj = annualized_return(population, returns_mean)
         volatility_obj = annualized_volatility(population, returns_cov)
         constraints_val = unit_sum_constraint(population)
+        if max_allocation is not None:
+            constraints_val += max_allocation_constraint(population, max_allocation)
         fronts, crowding_distances = non_dominated_fronts(return_obj, volatility_obj, constraints_val)
 
         for gen_idx in range(self._max_iter):
@@ -51,6 +53,8 @@ class Optimizer:
             return_obj = annualized_return(population, returns_mean)
             volatility_obj = annualized_volatility(population, returns_cov)
             constraints_val = unit_sum_constraint(population)
+            if max_allocation is not None:
+                constraints_val += max_allocation_constraint(population, max_allocation)
             fronts, crowding_distances = non_dominated_fronts(return_obj, volatility_obj, constraints_val)
             population, fronts, crowding_distances, return_obj, volatility_obj, constraints_val = select_top_individuals(population, fronts, crowding_distances, return_obj, volatility_obj, constraints_val)
 
