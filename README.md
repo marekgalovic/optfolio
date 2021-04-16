@@ -1,5 +1,5 @@
 # Optfolio
-This package provides a investment portfolio optimization tool that uses NSGA-II evolutionary algorithm to
+This package provides an investment portfolio optimization tool that uses NSGA-II evolutionary algorithm to
 approximate a Pareto optimal set of portfolio asset allocations. Returns of a particular portfolio asset
 distribution can be projected into the future using Monte Carlo or Markov Chain Monte Carlo methods.
 
